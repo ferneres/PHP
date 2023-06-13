@@ -7,13 +7,14 @@
     // print_r($conn)
 
     if(isset($_POST ['submetido'])){
-        $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : null;
+    $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : null;
     $genero = isset($_POST['genero']) ? $_POST['genero'] : null;
     $qtdPaginas = isset($_POST['qtdPaginas']) ? $_POST['qtdPaginas'] : null;
+    $autor= isset($_POST['autor']) ? $_POST['autor'] : null;
 
-    $sql = 'INSERT INTO livros(titulo,genero,qtd_paginas)' . 'VALUES(?,?,?)';
+    $sql = 'INSERT INTO livros(titulo,genero,qtd_paginas,autor)' . 'VALUES(?,?,?,?)';
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$titulo, $genero, $qtdPaginas]);
+    $stmt->execute([$titulo, $genero, $qtdPaginas,$autor]);
 
     header("location: livros.php");
 
@@ -38,6 +39,9 @@
 
     <form action="" method="POST">
         <input type="text" name="titulo" placeholder="Informe o Título" /><br><br>
+
+        <input type="text" name="autor" placeholder="Informe o Autor" /><br><br>
+
         <select name="genero">
             <option value="">--Selecione--</option>
             <option value="D">Drama</option>
@@ -70,6 +74,7 @@
         <tr  bgcolor="#48fafa">
             <td>ID</td>
             <td>Título</td>
+            <td>Autor</td>
             <td>Gênero</td>
             <td>Páginas</td>
             <td></td>
@@ -79,6 +84,7 @@
             <tr>
                 <td> <?php echo $reg['id'] ?> </td>
                 <td> <?php echo $reg['titulo'] ?> </td>
+                <td> <?php echo $reg['autor'] ?> </td>
                 <td> <?php
                         switch ($reg['genero']) {
                             case 'D':
